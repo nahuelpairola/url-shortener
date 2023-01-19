@@ -4,8 +4,6 @@ require('express-async-errors')
 import mongoose from 'mongoose'
 import * as dotenv from 'dotenv'
 
-dotenv.config()
-
 const app = express().use(bodyParser.json());
 const port = process.env.PORT || 4000
 
@@ -15,6 +13,10 @@ import { errorHandler } from './middleware/error-handler'
 
 app.use('/api/v1',routesUrl)
 app.use(errorHandler)
+
+if (process.env.NODE_ENV !== 'production') {
+    dotenv.config();
+}
 
 mongoose
     .connect(process.env.MONGO_URI!)

@@ -5,14 +5,14 @@ export async function create (urlObj : UrlClass) {
     return await Url.create(urlObj)
 }
 
-export async function searchByUrlShort (urlShort:string) {
+export async function getByUrlShort (urlShort:string) {
     return await Url.findOne({urlShort})
 }
 
-export async function searchByUrlOrig (urlOrig:string) {
+export async function getByUrlOrig (urlOrig:string) {
     return await Url.findOne({urlOrig})
 }
 
-export async function searchById(id:string) {
+export async function getById(id:string) {
     return await Url.findOne({id})
 }

@@ -7,10 +7,10 @@ export async function errorHandler(error:any,req:Request,res:Response,next:NextF
         message: error.message || 'Internal Server Error', 
         statusCode: 500
     }
-    if(middlewareError.message === 'Url Bad Request') {
+    if(error.message === 'Url Bad Request') {
         middlewareError.statusCode = 400
     }
-    if(middlewareError.message === 'Url Not Found') {
+    if(error.message === 'Url Not Found') {
         middlewareError.statusCode = 404
     }
     console.log("Error Handling Middleware called")

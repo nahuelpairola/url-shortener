@@ -5,25 +5,25 @@ import { ErrorBadRequest } from '../errors/ErrorBadRequest'
 
 export async function create (url : string) {
     if(!url || !isValidHttpUrl(url)) throw new ErrorBadRequest('Url Bad Request')
+    const urlMatched = await db.getByUrlOrig(url)
+    if(urlMatched) return urlMatched.urlShort
     const newUrl = new Url(url)
-    const urlMatched = await db.searchByUrlOrig(url)
-    if(urlMatched) return urlMatched 
     const result = await db.create(newUrl)
     return result.urlShort
 }
 
-export async function searchOriginalUrl (id : string) {
-    const result = await db.searchById(id)
+export async function getOriginalUrl (id : string) {
+    const result = await db.getById(id)
     if(!result) throw new ErrorNotFound('Url Not Found')
     return result.urlOrig
 }
 
 function isValidHttpUrl(str:string) {
-    let url:any;
-    try {
-      url = new URL(str);
-    } catch (_) {
-      return false;
-    }
-    return url.protocol === "http:" || url.protocol === "https:";
+  let url:any;
+  try {
+    url = new URL(str);
+  } catch (_) {
+    return false;
   }
+  return url.protocol === "http:" || url.protocol === "https:";
+}

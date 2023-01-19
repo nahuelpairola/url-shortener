@@ -4,9 +4,9 @@
   "description": "URL shortener",
   "main": "app.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon src/app.ts",
-    "tsc": "tsc"
+    "start:build": "tsc -w",
+    "start:run": "nodemon build/app.js",
+    "start":"concurrently npm:start"
   },
   "author": "NAP",
   "license": "UNLICENSED",
@@ -24,6 +24,6 @@
     "express-async-errors": "^3.1.1",
     "mongoose": "^6.8.3",
     "nanoid": "^3.3.4",
-    "validator": "^13.7.0"
+    "pm2": "^5.2.2"
   }
 }

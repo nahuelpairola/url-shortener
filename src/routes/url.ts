@@ -5,6 +5,6 @@ import * as controllers from '../controllers/url'
 const routes = express.Router()
 
 routes.route('/short').post(controllers.create)
-routes.route('/short/:id').get(controllers.search)
+routes.route('/short/:id').get(controllers.get)
 
 export default routes
