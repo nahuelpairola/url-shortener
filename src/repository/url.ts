@@ -16,3 +16,7 @@ export async function getByUrlOrig (urlOrig:string) {
 export async function getById(id:string) {
     return await Url.findOne({id})
 }
+
+export async function increaseClicksById(id:String,clicks:Number){
+    await Url.updateOne({id},{clicks})
+}

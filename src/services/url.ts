@@ -15,6 +15,7 @@ export async function create (url : string) {
 export async function getOriginalUrl (id : string) {
     const result = await db.getById(id)
     if(!result) throw new ErrorNotFound('Url Not Found')
+    await db.increaseClicksById(id,result.clicks+1)
     return result.urlOrig
 }
 

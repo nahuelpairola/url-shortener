@@ -58,6 +58,7 @@ function getOriginalUrl(id) {
         const result = yield db.getById(id);
         if (!result)
             throw new ErrorNotFound_1.ErrorNotFound('Url Not Found');
+        yield db.increaseClicksById(id, result.clicks + 1);
         return result.urlOrig;
     });
 }
