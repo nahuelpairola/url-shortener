@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.increaseClicksById = exports.getById = exports.getByUrlOrig = exports.getByUrlShort = exports.create = void 0;
+exports.getById = exports.getByUrlOrig = exports.getByUrlShort = exports.create = void 0;
 const url_1 = __importDefault(require("../models/url"));
 function create(urlObj) {
     return __awaiter(this, void 0, void 0, function* () {
@@ -28,19 +28,20 @@ function getByUrlShort(urlShort) {
 exports.getByUrlShort = getByUrlShort;
 function getByUrlOrig(urlOrig) {
     return __awaiter(this, void 0, void 0, function* () {
-        return yield url_1.default.findOne({ urlOrig });
+        const url = yield url_1.default.findOne({ urlOrig });
+        return url;
     });
 }
 exports.getByUrlOrig = getByUrlOrig;
+/**
+ *
+ * @param id : string
+ * @returns url : {_id, id, urlOrig, urlShort, createdAt, expiresAt, clicks}
+ */
 function getById(id) {
     return __awaiter(this, void 0, void 0, function* () {
-        return yield url_1.default.findOne({ id });
+        const url = yield url_1.default.findOneAndUpdate({ id }, { $inc: { clicks: 1 } }, { new: true });
+        return url;
     });
 }
 exports.getById = getById;
-function increaseClicksById(id, clicks) {
-    return __awaiter(this, void 0, void 0, function* () {
-        yield url_1.default.updateOne({ id }, { clicks });
-    });
-}
-exports.increaseClicksById = increaseClicksById;

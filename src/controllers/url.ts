@@ -3,7 +3,7 @@ import * as services from "../services/url";
 
 export async function create (req:Request,res:Response) {
     const {url,expiresIn} = req.body
-    const data = await services.create(url)
+    const data = await services.create(url,expiresIn)
     res.json({
         success: true,
         message: 'Url shorted successful',

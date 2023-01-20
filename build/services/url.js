@@ -40,29 +40,47 @@ const Url_1 = __importDefault(require("../types/Url"));
 const db = __importStar(require("../repository/url"));
 const ErrorNotFound_1 = require("../errors/ErrorNotFound");
 const ErrorBadRequest_1 = require("../errors/ErrorBadRequest");
-function create(url) {
+/**
+ *
+ * @param url : original url, url to short
+ * @param expiresIn : integer, time in hours to live
+ * @returns : urlShort, string
+ */
+function create(url, expiresIn) {
     return __awaiter(this, void 0, void 0, function* () {
         if (!url || !isValidHttpUrl(url))
             throw new ErrorBadRequest_1.ErrorBadRequest('Url Bad Request');
+        if (!expiresIn || (!Number.isInteger(expiresIn) && Number(expiresIn) > 0))
+            throw new ErrorBadRequest_1.ErrorBadRequest('Url Bad Request');
         const urlMatched = yield db.getByUrlOrig(url);
-        if (urlMatched)
+        if (urlMatched) {
             return urlMatched.urlShort;
-        const newUrl = new Url_1.default(url);
+        }
+        const newUrl = new Url_1.default(url, expiresIn);
         const result = yield db.create(newUrl);
         return result.urlShort;
     });
 }
 exports.create = create;
+/**
+ *
+ * @param id
+ * @returns
+ */
 function getOriginalUrl(id) {
     return __awaiter(this, void 0, void 0, function* () {
-        const result = yield db.getById(id);
-        if (!result)
+        const url = yield db.getById(id);
+        if (!url)
             throw new ErrorNotFound_1.ErrorNotFound('Url Not Found');
-        yield db.increaseClicksById(id, result.clicks + 1);
-        return result.urlOrig;
+        return url.urlOrig;
     });
 }
 exports.getOriginalUrl = getOriginalUrl;
+/**
+ *
+ * @param str
+ * @returns
+ */
 function isValidHttpUrl(str) {
     let url;
     try {

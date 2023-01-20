@@ -22,7 +22,7 @@ const urlSchema = new mongoose_1.default.Schema({
         type: Date,
     },
     expiresAt: {
-        // required:true,
+        required: true,
         type: Date,
     },
     clicks: {

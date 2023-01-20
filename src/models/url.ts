@@ -18,7 +18,7 @@ const urlSchema = new mongoose.Schema({
         type:Date,
     },
     expiresAt:{
-        // required:true,
+        required:true,
         type:Date,
     },
     clicks:{

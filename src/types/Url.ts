@@ -6,12 +6,14 @@ class Url {
     urlShort:string
     clicks: number
     createdAt:Date
-    constructor(url:string) {
+    expiresAt:Date
+    constructor(url:string,expiresIn:number) {
         this.id = nanoid()
         this.urlOrig = url
         this.urlShort = `${process.env.BASE}/${this.id}`
         this.clicks = 0
         this.createdAt = new Date()
+        this.expiresAt = new Date(this.createdAt.getTime() + (expiresIn * 3600 * 1000))
     }
 }
 

@@ -37,7 +37,7 @@ const services = __importStar(require("../services/url"));
 function create(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         const { url, expiresIn } = req.body;
-        const data = yield services.create(url);
+        const data = yield services.create(url, expiresIn);
         res.json({
             success: true,
             message: 'Url shorted successful',

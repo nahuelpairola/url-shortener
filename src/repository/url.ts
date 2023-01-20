@@ -10,13 +10,16 @@ export async function getByUrlShort (urlShort:string) {
 }
 
 export async function getByUrlOrig (urlOrig:string) {
-    return await Url.findOne({urlOrig})
+    const url : any = await Url.findOne({urlOrig})
+    return url
 }
 
+/**
+ * 
+ * @param id : string
+ * @returns url : {_id, id, urlOrig, urlShort, createdAt, expiresAt, clicks}
+ */
 export async function getById(id:string) {
-    return await Url.findOne({id})
-}
-
-export async function increaseClicksById(id:String,clicks:Number){
-    await Url.updateOne({id},{clicks})
+    const url: any = await Url.findOneAndUpdate({id},{$inc:{clicks:1}},{new:true})
+    return url
 }
