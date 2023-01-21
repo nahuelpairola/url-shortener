@@ -32,6 +32,11 @@ export async function getOriginalUrl (id : string) {
   return url.urlOrig
 }
 
+export async function deleteExpiredUrls () {
+  const deletedCount = await db.deleteExpiredUrls()
+  return deletedCount
+}
+
 /**
  * 
  * @param str 
@@ -46,3 +51,4 @@ function isValidHttpUrl(str:string) {
   }
   return url.protocol === "http:" || url.protocol === "https:";
 }
+

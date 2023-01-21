@@ -35,7 +35,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getOriginalUrl = exports.create = void 0;
+exports.deleteExpiredUrls = exports.getOriginalUrl = exports.create = void 0;
 const Url_1 = __importDefault(require("../types/Url"));
 const db = __importStar(require("../repository/url"));
 const ErrorNotFound_1 = require("../errors/ErrorNotFound");
@@ -76,6 +76,13 @@ function getOriginalUrl(id) {
     });
 }
 exports.getOriginalUrl = getOriginalUrl;
+function deleteExpiredUrls() {
+    return __awaiter(this, void 0, void 0, function* () {
+        const deletedCount = yield db.deleteExpiredUrls();
+        return deletedCount;
+    });
+}
+exports.deleteExpiredUrls = deleteExpiredUrls;
 /**
  *
  * @param str

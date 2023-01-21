@@ -31,31 +31,23 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-const express = require("express");
-const connect_1 = require("./db/connect");
-const bodyParser = require('body-parser');
-require('express-async-errors');
-const dotenv = __importStar(require("dotenv"));
-const app = express().use(bodyParser.json());
-const port = process.env.PORT || 4000;
-// routes
-const url_1 = __importDefault(require("./routes/url"));
-const error_handler_1 = require("./middleware/error-handler");
-const services = __importStar(require("./services/schedule"));
-app.use('/api/v1', url_1.default);
-app.use(error_handler_1.errorHandler);
-if (process.env.NODE_ENV !== 'production') {
-    dotenv.config();
-}
-function start() {
+exports.startSchedules = void 0;
+const cron = __importStar(require("node-cron"));
+const urlServices = __importStar(require("./url"));
+const EVERY_HOUR = '* 1 * * *';
+const EVERY_DAY = '* * 1 * *';
+const EVERY_HALF_HOUR = '30 * * * *';
+function startSchedules() {
     return __awaiter(this, void 0, void 0, function* () {
-        yield (0, connect_1.connectDB)();
-        app.listen(4000, () => console.log(`url-shortener listening on http://localhost:${port}/api/v1`));
-        yield services.startSchedules();
+        cron.schedule(EVERY_DAY, deleteUrls);
     });
 }
-start();
+exports.startSchedules = startSchedules;
+function deleteUrls() {
+    return __awaiter(this, void 0, void 0, function* () {
+        const count = yield urlServices.deleteExpiredUrls(); // delete every hour urls with expired time
+        const now = new Date(); // now
+        console.log(`Urls deleted at ${now} : ${count} urls`); // message
+    });
+}

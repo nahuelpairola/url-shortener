@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getById = exports.getByUrlOrig = exports.getByUrlShort = exports.create = void 0;
+exports.deleteExpiredUrls = exports.getById = exports.getByUrlOrig = exports.getByUrlShort = exports.create = void 0;
 const url_1 = __importDefault(require("../models/url"));
 function create(urlObj) {
     return __awaiter(this, void 0, void 0, function* () {
@@ -45,3 +45,10 @@ function getById(id) {
     });
 }
 exports.getById = getById;
+function deleteExpiredUrls() {
+    return __awaiter(this, void 0, void 0, function* () {
+        const result = yield url_1.default.deleteMany({ expiresAt: { $lt: new Date() } });
+        return result.deletedCount;
+    });
+}
+exports.deleteExpiredUrls = deleteExpiredUrls;

@@ -19,7 +19,12 @@ export async function getByUrlOrig (urlOrig:string) {
  * @param id : string
  * @returns url : {_id, id, urlOrig, urlShort, createdAt, expiresAt, clicks}
  */
-export async function getById(id:string) {
+export async function getById (id:string) {
     const url: any = await Url.findOneAndUpdate({id},{$inc:{clicks:1}},{new:true})
     return url
+}
+
+export async function deleteExpiredUrls () {
+    const result:any = await Url.deleteMany({expiresAt:{$lt: new Date()}})
+    return result.deletedCount
 }
