@@ -32,6 +32,10 @@ export async function getOriginalUrl (id : string) {
   return url.urlOrig
 }
 
+/**
+ * This url service delete urls expireds 
+ * @returns deletedCount : number of urls deleted
+ */
 export async function deleteExpiredUrls () {
   const deletedCount = await db.deleteExpiredUrls()
   return deletedCount
