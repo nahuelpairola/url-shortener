@@ -76,6 +76,10 @@ function getOriginalUrl(id) {
     });
 }
 exports.getOriginalUrl = getOriginalUrl;
+/**
+ * This url service delete urls expireds
+ * @returns deletedCount : number of urls deleted
+ */
 function deleteExpiredUrls() {
     return __awaiter(this, void 0, void 0, function* () {
         const deletedCount = yield db.deleteExpiredUrls();

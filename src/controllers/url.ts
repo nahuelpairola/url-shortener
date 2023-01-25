@@ -1,9 +1,9 @@
 import {Request, Response } from "express";
-import * as services from "../services/url";
+import * as urlServices from "../services/url";
 
 export async function create (req:Request,res:Response) {
     const {url,expiresIn} = req.body
-    const data = await services.create(url,expiresIn)
+    const data = await urlServices.create(url,expiresIn)
     res.json({
         success: true,
         message: 'Url shorted successful',
@@ -13,6 +13,6 @@ export async function create (req:Request,res:Response) {
 
 export async function get (req:Request,res:Response) {
     const {id} = req.params
-    const urlOriginal = await services.getOriginalUrl(id)
+    const urlOriginal = await urlServices.getOriginalUrl(id)
     res.status(302).redirect(urlOriginal)
 }

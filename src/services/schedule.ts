@@ -1,14 +1,17 @@
-import * as cron from 'node-cron'
 
+import * as cron from 'node-cron';
 import * as urlServices from './url'
 
-const EVERY_MINUTE = '* * * * *'
-const EVERY_HALF_HOUR = '30 * * * *'
-const EVERY_HOUR = '* 1 * * *'
-const EVERY_DAY = '* * 1 * *'
+export enum Times {
+    EVERY_MINUTE = '* * * * *',
+    EVERY_TEN_MINUTES = '10 * * * *',
+    EVERY_HALF_HOUR = '0 */30 * * * *',
+    EVERY_HOUR = '0 0 */1 * * *',
+    EVERY_DAY = '* * 1 * *',
+}
 
 export async function startSchedules () {
-    cron.schedule(EVERY_DAY, deleteUrls)
+    cron.schedule(Times.EVERY_DAY, deleteUrls)
 }
 
 async function deleteUrls () { // every minute

@@ -35,9 +35,11 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.startSchedules = void 0;
 const cron = __importStar(require("node-cron"));
 const urlServices = __importStar(require("./url"));
+const EVERY_MINUTE = '* * * * *';
+const EVERY_TEN_MINUTES = '10 * * * *';
+const EVERY_HALF_HOUR = '30 * * * *';
 const EVERY_HOUR = '* 1 * * *';
 const EVERY_DAY = '* * 1 * *';
-const EVERY_HALF_HOUR = '30 * * * *';
 function startSchedules() {
     return __awaiter(this, void 0, void 0, function* () {
         cron.schedule(EVERY_DAY, deleteUrls);
