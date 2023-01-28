@@ -1,4 +1,4 @@
-import express = require('express')
+const express = require('express')
 import { connectDB } from './db/connect'
 const bodyParser = require('body-parser')
 require('express-async-errors')
@@ -10,7 +10,7 @@ const port = process.env.PORT || 4000
 // routes
 import routesUrl from './routes/url'
 import { errorHandler } from './middleware/error-handler'
-import * as services from './services/schedule'
+import {runSchedules} from './jobs'
 
 app.use('/api/v1',routesUrl)
 app.use(errorHandler)
@@ -22,7 +22,7 @@ if (process.env.NODE_ENV !== 'production') {
 async function start () {
     await connectDB()
     app.listen(4000,()=> console.log(`url-shortener listening on http://localhost:${port}/api/v1`))
-    await services.startSchedules()
+    await runSchedules()
 }
 
 start()

@@ -22,20 +22,11 @@ var __importStar = (this && this.__importStar) || function (mod) {
     __setModuleDefault(result, mod);
     return result;
 };
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const express = require("express");
+const express = require('express');
 const connect_1 = require("./db/connect");
 const bodyParser = require('body-parser');
 require('express-async-errors');
@@ -45,17 +36,15 @@ const port = process.env.PORT || 4000;
 // routes
 const url_1 = __importDefault(require("./routes/url"));
 const error_handler_1 = require("./middleware/error-handler");
-const services = __importStar(require("./services/schedule"));
+const jobs_1 = require("./jobs");
 app.use('/api/v1', url_1.default);
 app.use(error_handler_1.errorHandler);
 if (process.env.NODE_ENV !== 'production') {
     dotenv.config();
 }
-function start() {
-    return __awaiter(this, void 0, void 0, function* () {
-        yield (0, connect_1.connectDB)();
-        app.listen(4000, () => console.log(`url-shortener listening on http://localhost:${port}/api/v1`));
-        yield services.startSchedules();
-    });
+async function start() {
+    await (0, connect_1.connectDB)();
+    app.listen(4000, () => console.log(`url-shortener listening on http://localhost:${port}/api/v1`));
+    await (0, jobs_1.runSchedules)();
 }
 start();

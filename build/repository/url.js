@@ -1,36 +1,21 @@
 "use strict";
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.deleteExpiredUrls = exports.getById = exports.getByUrlOrig = exports.getByUrlShort = exports.create = void 0;
 const url_1 = __importDefault(require("../models/url"));
-function create(urlObj) {
-    return __awaiter(this, void 0, void 0, function* () {
-        return yield url_1.default.create(urlObj);
-    });
+async function create(urlObj) {
+    return await url_1.default.create(urlObj);
 }
 exports.create = create;
-function getByUrlShort(urlShort) {
-    return __awaiter(this, void 0, void 0, function* () {
-        return yield url_1.default.findOne({ urlShort });
-    });
+async function getByUrlShort(urlShort) {
+    return await url_1.default.findOne({ urlShort });
 }
 exports.getByUrlShort = getByUrlShort;
-function getByUrlOrig(urlOrig) {
-    return __awaiter(this, void 0, void 0, function* () {
-        const url = yield url_1.default.findOne({ urlOrig });
-        return url;
-    });
+async function getByUrlOrig(urlOrig) {
+    const url = await url_1.default.findOne({ urlOrig });
+    return url;
 }
 exports.getByUrlOrig = getByUrlOrig;
 /**
@@ -38,17 +23,14 @@ exports.getByUrlOrig = getByUrlOrig;
  * @param id : string
  * @returns url : {_id, id, urlOrig, urlShort, createdAt, expiresAt, clicks}
  */
-function getById(id) {
-    return __awaiter(this, void 0, void 0, function* () {
-        const url = yield url_1.default.findOneAndUpdate({ id }, { $inc: { clicks: 1 } }, { new: true });
-        return url;
-    });
+async function getById(id) {
+    // before getting an URL, clicks variable increases in one
+    const url = await url_1.default.findOneAndUpdate({ id }, { $inc: { clicks: 1 } }, { new: true });
+    return url;
 }
 exports.getById = getById;
-function deleteExpiredUrls() {
-    return __awaiter(this, void 0, void 0, function* () {
-        const result = yield url_1.default.deleteMany({ expiresAt: { $lt: new Date() } });
-        return result.deletedCount;
-    });
+async function deleteExpiredUrls() {
+    const result = await url_1.default.deleteMany({ expiresAt: { $lt: new Date() } });
+    return result.deletedCount;
 }
 exports.deleteExpiredUrls = deleteExpiredUrls;

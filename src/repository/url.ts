@@ -20,6 +20,7 @@ export async function getByUrlOrig (urlOrig:string) {
  * @returns url : {_id, id, urlOrig, urlShort, createdAt, expiresAt, clicks}
  */
 export async function getById (id:string) {
+    // before getting an URL, clicks variable increases in one
     const url: any = await Url.findOneAndUpdate({id},{$inc:{clicks:1}},{new:true})
     return url
 }
