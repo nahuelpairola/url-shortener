@@ -10,7 +10,7 @@ const port = process.env.PORT || 4000
 // routes
 import routesUrl from './routes/url'
 import { errorHandler } from './middleware/error-handler'
-import {runSchedules} from './jobs'
+import {runSchedules} from './schedules'
 
 app.use('/api/v1',routesUrl)
 app.use(errorHandler)

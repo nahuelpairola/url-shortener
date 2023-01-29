@@ -18,7 +18,7 @@ export async function create (url : string, expiresIn:number) {
   }
   const newUrl = new Url(url, expiresIn)
   const result = await db.create(newUrl)
-  return result.urlShort
+  return {url: result.urlShort, expiresAt: result.expiresAt}
 }
 
 /**
