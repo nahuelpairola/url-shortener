@@ -1,4 +1,10 @@
 /node_modules
-.env
+.vscode/
+/dist
 /build
 ecosystem.config.js
+
+# env variables
+.env
+.env.production
+.env.development

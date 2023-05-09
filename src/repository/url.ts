@@ -21,11 +21,11 @@ export async function getByUrlOrig (urlOrig:string) {
  */
 export async function getById (id:string) {
     // before getting an URL, clicks variable increases in one
-    const url: any = await Url.findOneAndUpdate({id},{$inc:{clicks:1}},{new:true})
+    const url: any = await Url.findOneAndUpdate({id:id},{$inc:{clicks:1}})
     return url
 }
 
 export async function deleteExpiredUrls () {
-    const result:any = await Url.deleteMany({expiresAt:{$lt: new Date()}})
+    const result: any = await Url.deleteMany({expiresAt:{$lt: new Date()}})
     return result.deletedCount
 }

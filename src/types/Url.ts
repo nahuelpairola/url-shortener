@@ -13,7 +13,7 @@ class Url {
         this.urlShort = `${process.env.BASE}/${this.id}`
         this.clicks = 0
         this.createdAt = new Date()
-        this.expiresAt = new Date(this.createdAt.getTime() + (expiresIn * 3600 * 1000))
+        this.expiresAt = new Date(this.createdAt.getTime() + (expiresIn * 86400000 ))
     }
 }
 

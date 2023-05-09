@@ -13,6 +13,6 @@ export async function create (req:Request,res:Response) {
 
 export async function get (req:Request,res:Response) {
     const {id} = req.params
-    const urlOriginal = await urlServices.getOriginalUrl(id)
-    res.status(302).redirect(urlOriginal)
+    const data = await urlServices.getOriginalUrl(id)
+    res.status(302).redirect(data)
 }

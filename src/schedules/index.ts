@@ -13,6 +13,4 @@ enum Times {
 
 export async function runSchedules () {
     schedule.scheduleJob(Times.EVERY_DAY, deleteExpiredUrls)
-    // schedule.scheduleJob(<insert new cron time>, <insert function>)
 }
-

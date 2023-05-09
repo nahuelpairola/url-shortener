@@ -1,5 +1,5 @@
 const express = require('express')
-import { connectDB } from './db/connect'
+import { connectDB } from './database/connect'
 const bodyParser = require('body-parser')
 require('express-async-errors')
 import * as dotenv from 'dotenv'
@@ -11,6 +11,7 @@ const port = process.env.PORT || 4000
 import routesUrl from './routes/url'
 import { errorHandler } from './middleware/error-handler'
 import {runSchedules} from './schedules'
+
 
 app.use('/api/v1',routesUrl)
 app.use(errorHandler)
