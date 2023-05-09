@@ -25,7 +25,7 @@ The port is **PORT : http://localhost:4000**.
 ## Endpoints
 
 ### POST **PORT/short** 
-Short a new URL. The body requires **url** and **expiresIn** elements. **expiresIn** is the hours quantity to live.
+Short a new URL. The body requires **url** and **expiresIn** elements. **expiresIn** is the hours to live.
 
 **Body Request:**
 
@@ -37,7 +37,7 @@ Short a new URL. The body requires **url** and **expiresIn** elements. **expires
 ``` 
 **Response:**
 
-It contains if everything wass **succes**, a **message** and the data: the shorted **url** and when it **expires**.
+It contains if everything wass **success**, a **message** and the data: the shorted **url** and when it **expires**.
 
 ```json
 {
